@@ -8,37 +8,33 @@
  {#  le contenu du bloc body est envoyé dans le bloque body  du fichier base.html.twig #}
 {% block body %}
    <h1 class="display-4 text-center my-4"> Listes des articles</h1>
+
    <div class="row d-flex justify-content-center">
 
+      {# for est une boucle twig, une commande twig #}
+      {# la variable 'artcile' provient de la mèthode index du controller 'blogController' , 
+      elle contient tous les articles selectionnées en BDD #}
+      {# NOUS SOMMES obligé de boucler puisque nous avons selectionné 10 articles en BDD #}
+      {# newArticle est une variable de récéption que nous déclarons dans la boucle FOR et 
+      qui réceptionne un article par tour de boucle #}
+
+      {% for newArticle in articles %}
+
       <div class="col-md-3 border border-secondary rounded mr-1 mb-1 text-center">
       <img src='https://picsum.photos/250' alt='' class=""><hr>
-        <h2>Heading</h2>
-        <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-        <p><a class="btn btn-secondary" href="{{ path('blog_show') }}" role="button">View details &raquo;</a></p>
+        <h2>{{ newArticle.title }}</h2>
+        <p>{{ newArticle.content|raw }}</p><hr>
+        <p>Posté le {{newArticle.createdAt|date('Y-m-d')}} à {{newArticle.createdAt|date('H:i:s')}} </p> <hr>
+        <p><a class="btn btn-info" href="{{ path('blog_show', {'id': newArticle.id }) }}" role="button">
+        View details &raquo;</a></p>
+        {# on ajoute un éme param à la methode path() de twig afin de transmettre l'id de l'article dans l'url #}
       </div> 
 
-      <div class="col-md-3 border border-secondary rounded mr-1 mb-1 text-center">
-      <img src='https://picsum.photos/250' alt='' class=""><hr>
+      {# sanas le filtre twig raw, mes balises p s'affiche#}
+      {# date() filtre twig qui permet d(afficher la date et l'heure #}
+      {# newarticle.creatAt : la BDD renvoie un objet  dateTime pour le converti en string #}
 
-        <h2>Heading</h2>
-        <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-        <p><a class="btn btn-secondary" href="{{ path('blog_show') }}" role="button">View details &raquo;</a></p>
-      </div>
-      <div class="col-md-3 border border-secondary rounded mr-1 mb-1 text-center">
-      <img src='https://picsum.photos/250' alt='' class=""><hr>
-
-        <h2>Heading</h2>
-        <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-        <p><a class="btn btn-secondary" href="{{ path('blog_show') }}" role="button">View details &raquo;</a></p>
-      </div>
-      <div class="col-md-3 border border-secondary rounded mr-1 mb-1 text-center">
-      <img src='https://picsum.photos/250' alt='' class=""><hr>
-
-        <h2>Heading</h2>
-        <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-        <p><a class="btn btn-secondary" href="{{ path('blog_show') }}" role="button">View details &raquo;</a></p>
-      </div>
-
+      {% endfor %}
 
     </div>
 {% endblock %}
