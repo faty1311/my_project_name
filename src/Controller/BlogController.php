@@ -3,17 +3,21 @@
 namespace App\Controller;
 
 use App\Entity\Article;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Repository\ArticleRepository;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+
 
 class BlogController extends AbstractController
 {
     //un commentaire qui commence avec un @ est une annotation très importante, symfony exlique que lorqu'on lancera www.monsite.com/blog, on fera appel à la methode index()
     //Pas besion de préciser template/blog/index.html.twig,symfony sait ou se trouve les fichiers templates du rendu
+    
     /**
      * @Route("/blog", name="blog")
      */
-    public function index()
+    public function index(ArticleRepository $repo)
     {
 
         /*
@@ -28,15 +32,17 @@ class BlogController extends AbstractController
         */
        // findAll() est une méthode issue de la classe ArticleRepository qui permet de selectionner l'ensemble de la table (similaire à SELECT * FROM article)
  
-        $repo =$this->getDoctrine()->getRepository(Article::class);
-
-        $article = $repo->findAll();
+        //$repo =$this->getDoctrine()->getRepository(Article::class);
+        $articles = $repo->findAll();
         
-        dump($article);
+        dump($articles);
 
         return $this->render('blog/index.html.twig', [
             'controller_name' => 'BlogController',
+            'articles' =>$articles
         ]);
+
+        //on envois les articles selectionnés en BDD directement sur le navigateur dans le template index.html.twig
     }
     /**
  * @route("/",name="home")
@@ -49,25 +55,36 @@ class BlogController extends AbstractController
          'age' => 25
      ]);
  }
+
+  /**
+     * @route("/blog/new",name="blog_create")
+   */
+public function create(Request $request)
+{
+    dump($request);
+    return $this->render('blog/create.html.twig');
+}
+
   
 // show() : méthode permettant d'afficher le détail d'un article
-
+             //45
  /**
-  * @route("/blog/45",name="blog_show")
+  * @route("/blog/{id}",name="blog_show")
   */
-  public function show()
+  public function show(Article $article) //1
   {
-      return $this->render('blog/show.html.twig');
+      //$repo =$this->getDoctrine()->getRepository(Article::class);
+
+      //$article = $repo->find($id);
+
+      dump($article);
+
+      return $this->render('blog/show.html.twig',[
+             'article' => $article
+      ]);
   }
  
 
-//   // create() : méthode 
 
-//  /**
-//   * @route("blog/create",name="blog_create)
-//   */
-//   public function create()
-//   {
-//       return $this->render('blog/create.html.twig');
-//   }
+
 }

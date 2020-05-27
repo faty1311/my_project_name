@@ -25,12 +25,19 @@
 
             <div class="collapse navbar-collapse" id="navbarsExample04">
                 <ul class="navbar-nav mr-auto">
+                
+                 <li class="nav-item active">
+                    <a class="nav-link" href="{{ path('blog_create') }}">créer un formulaire</a>
+      
+                </li>
+         
                 <li class="nav-item active">
                     <a class="nav-link" href="{{ path('blog') }}">Articles</a>
              {#  path() : fonction twig permettant de généger une URL en fonction de nom de la route envoyer en argument #}
              {# le nom de la route 'blog'  est déclarée dans le controller "BlogController" et est rataché à la méthode index() #}
                 </li>
-          
+
+              
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-toggle="dropdown" aria-haspopup="true"
                      aria-expanded="false">Catégories</a>
