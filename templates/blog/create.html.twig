@@ -1,19 +1,20 @@
-
 {% extends "base.html.twig" %}
+
+{% form_theme formArticle 'bootstrap_4_layout.html.twig' %}
 
 {% block body %}
 
     <h1 class="display-4 text-center my-4">Création d'un article</h1>
     
-    <form method="post" class="col-md-8 mx-auto">
+    {#<form method="post" class="col-md-8 mx-auto">
   <div class="form-group">
-    <label for="titre">Titre</label>
-    <input type="text" class="form-control" id="titre" name="titre" placeholder="Entrer le titre">
+    <label for="title">Titre</label>
+    <input type="text" class="form-control" id="title" name="title" placeholder="Entrer le titre">
    
   </div>
   <div class="form-group">
-    <label for="contenu">Contenu</label>
-    <textarea type="text" class="form-control" id="contenu" name="contenu" placeholder="contenu"></textarea>
+    <label for="content">Contenu</label>
+    <textarea type="text" class="form-control" id="content" name="content" placeholder="contenu"></textarea>
   </div>
  <div class="form-group">
     <label for="image">Image</label>
@@ -24,5 +25,20 @@
  
 
     </div> 
+#}
+
+{# {{ form(formArticle) }} #}
+
+{{ form_start(formArticle, {'attr':{'class':'col-md-7 mx-auto'} } ) }}
+   
+
+   {{ form_row(formArticle.title,{'attr':{'placeholder':"Titre de l'article"} }) }}
+   {{ form_row(formArticle.content,{'attr':{'placeholder':"Contenu de l'article","rows":13} }) }}
+   {{ form_row(formArticle.image,{'attr':{'placeholder':"URL de l'image"} }) }}
+
+   <button type="submit" class="btn btn-primary">Ajouter l'article</button>
+
+
+{{ form_end(formArticle) }}
 
 {% endblock %}
