@@ -21,9 +21,9 @@
       {% for newArticle in articles %}
 
       <div class="col-md-3 border border-secondary rounded mr-1 mb-1 text-center">
-      <img src='https://picsum.photos/250' alt='' class=""><hr>
+      <img src='{{newArticle.image}}' alt='{{ newArticle.title}}' class="clo-md-12 rounded"><hr>
         <h2>{{ newArticle.title }}</h2>
-        <p>{{ newArticle.content|raw }}</p><hr>
+        <p>{{ newArticle.content|slice(3,200)|raw }}</p><hr>
         <p>Posté le {{newArticle.createdAt|date('Y-m-d')}} à {{newArticle.createdAt|date('H:i:s')}} </p> <hr>
         <p><a class="btn btn-info" href="{{ path('blog_show', {'id': newArticle.id }) }}" role="button">
         View details &raquo;</a></p>
