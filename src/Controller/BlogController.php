@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Article;
+use App\Form\ArticleType;
 use App\Repository\ArticleRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -94,15 +95,13 @@ public function form(Article $article=null,  Request $request,EntityManagerInter
     // $article->setTitle("titre à la con")
     //         ->setContent("Contenu de l'article à la con");
     
-    $form = $this->createFormBuilder($article)
+    // $form = $this->createFormBuilder($article)
+    //              ->add('title')
+    //              ->add('content')
+    //              ->add('image')
+    //              ->getForm();
 
-                 ->add('title')
-                 ->add('content')
-
-                 ->add('image')
-
-                  
-                 ->getForm();
+      $form = $this->createForm(ArticleType::class, $article);
 
       $form->handleRequest($request);  
 
@@ -123,7 +122,9 @@ public function form(Article $article=null,  Request $request,EntityManagerInter
         }
 
     return $this->render('blog/create.html.twig',[
-          'formArticle' => $form->createView()
+          'formArticle' => $form->createView(),
+          'editMode' => $article ->getId() !== null // on test si l'aricle possède un Id ou non,
+          // si oui c'est une modification, sinon c'est une insertion
     ]);
 }
 

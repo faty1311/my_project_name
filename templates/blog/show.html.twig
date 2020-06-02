@@ -8,11 +8,30 @@
       <img src="{{ article.image|replace({"250": "1000/300"}) }}"><hr>
         <h2> {{article.title}}</h2>
        <p>{{article.content|raw}}</p><hr>
-       <p>Posté le {{article.createdAt|date('Y-m-d')}} à {{article.createdAt|date('H:i:s')}} </p> <hr>
+       <p>Posté le {{article.createdAt|date('Y-m-d')}} à {{article.createdAt|date('H:i:s')}} dansa la catégorie <strong>{{
+         article.category.title }} </strong></p>
     </div> 
 
     {# pensez à prevoir un lien revoi à la liste des articles #}
 
-    <a class="btn btn-primary" href="{{ path('blog') }}" >Retour aux articles</a>
+    <a class="btn btn-primary mb-3" href="{{ path('blog') }}" >Retour aux articles</a>
+
+    <h2 class="text-center">Commentaires</h2>
+     
+     <div class="col-md-12">
+       {% for comment in article.comments %}
+       
+       <div class="row border rounded md-2">
+          <div class="col-md-4">
+            <span>{{ comment.author }}</span>
+            <small class="font-italic">( {{ comment.createdAt|date('d/m/Y à h:i:s') }} )</small>
+          </div>
+          <div class="col-md-8">
+              <p>{{ comment.comment|raw }}</p>
+          </div>
+
+            {% endfor %}
+       </div>
+  
 
 {% endblock %}
